@@ -1,0 +1,21 @@
+GET http://localhost:4000/admin   
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbklkIjoxLCJpYXQiOjE2Nzg5NDE3MDUsImV4cCI6MTY3ODk0MTcyNX0.CHn8ypdYiDxCs21N1TLoJDaviQQNlsT3mzogqXNBw0k
+
+###
+POST http://localhost:4000/admin   
+Content-Type: application/json
+
+{
+    "username" : "dimas",
+    "password" : "qwerty2023",
+    "token" : "initoken123"
+}
+
+###
+POST http://localhost:4000/login   
+Content-Type: application/json
+
+{
+    "username" : "andika",
+    "password" : "qwerty2023"
+}
