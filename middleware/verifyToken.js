@@ -1,14 +1,14 @@
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
-    const authHeader = req.headers['authorization']
-    const token = authHeader?.split(' ')[1]
+  const authHeader = req.headers["authorization"];
+  const tokenFromReq = authHeader?.split(" ")[1];
 
-    if (token == null) return res.sendStatus(401)
+  if (tokenFromReq === undefined) return res.sendStatus(401);
 
-    jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
-        if (err) return res.sendStatus(403)
-        req.username = decoded.username
-        next()
-    })
-}
+  jwt.verify(tokenFromReq, process.env.ACCESS_TOKEN, (err, admin) => {
+    if (err) return res.sendStatus(403);
+    req.admin = admin;
+    next();
+  });
+};

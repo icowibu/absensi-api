@@ -1,33 +1,36 @@
-import bodyParser from 'body-parser';
-import express from 'express'
-import cors from "cors"
-import routes from './routes/routes.js';
+import bodyParser from "body-parser";
+import express from "express";
+import cors from "cors";
+import routes from "./routes/routes.js";
 
-import * as dotenv from 'dotenv'
-import database from './db/config.js';
-import cookieParser from 'cookie-parser';
+import * as dotenv from "dotenv";
+import database from "./db/config.js";
+import cookieParser from "cookie-parser";
 
-dotenv.config()
+dotenv.config();
 
 try {
-    await database.authenticate();
-    console.log("database conected ...")
+  await database.authenticate();
+  console.log("database conected ...");
 } catch (err) {
-    err.message
+  err.message;
 }
 
-const app = express()
+const app = express();
 
-app.use(cookieParser())
-app.use(cors())
+app.use(cookieParser());
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+    origin: true,
+  })
+);
 
-app.use(routes)
+app.use(routes);
 
 // app.listen(process.env.PORT, '0.0.0.0', () => console.log(`LISTENING ON PORT ${process.env.PORT}`))
 app.listen(process.env.PORT, () => {
-    console.log("aplikasi berjalan pada port 4000")
-})
+  console.log("aplikasi berjalan pada port 4000");
+});
