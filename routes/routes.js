@@ -15,6 +15,7 @@ import {
 } from "../controllers/admin/adminControlers.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import { refreshToken } from "../controllers/refreshToken.js";
+import { createAcara, getAllAcara } from "../controllers/acara/acaraControl.js";
 
 const routes = express.Router();
 
@@ -34,5 +35,9 @@ routes.get("/admin", verifyToken, adminCheck);
 routes.post("/auth/register", register);
 routes.post("/auth/login", login);
 routes.post("/token", refreshToken);
+
+// acara route
+routes.post("/acara", createAcara);
+routes.get("/acara", getAllAcara);
 
 export default routes;

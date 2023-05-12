@@ -1,0 +1,13 @@
+GET http://localhost:4000/acara
+
+###
+POST http://localhost:4000/acara   
+Content-Type: application/json
+
+{
+    "acara" : "pengajian desa muda mudi",
+    "tempat" : "al-hikmah",
+    "hari" : "10-4-2023",
+    "dari" : "10-10-10",
+    "sampai" : "20-20-20"
+}

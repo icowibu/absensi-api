@@ -3,7 +3,7 @@ import { hash, genSalt, compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const adminCheck = async (req, res) => {
-  res.status(200).json({ isLoggedIn: true });
+  res.status(200).json({ admin: req.admin });
 };
 
 export const register = async (req, res) => {
@@ -36,22 +36,19 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
-
-  const admin = await Admin.findOne({ where: { username } });
+  const admin = await Admin.findOne({ where: { username: req.body.username } });
   if (admin === null)
     return res.status(400).json({ msg: "username tidak ditemukan" });
 
-  const pwMatch = await compare(password, admin.password);
+  const pwMatch = await compare(req.body.password, admin.password);
   if (!pwMatch) return res.status(400).json({ msg: "password salah" });
 
-  const { id, nama } = admin;
-
-  const accessToken = jwt.sign({ id, nama }, process.env.ACCESS_TOKEN, {
-    expiresIn: "10m",
+  const { id, username } = admin;
+  const accessToken = jwt.sign({ id, username }, process.env.ACCESS_TOKEN, {
+    expiresIn: "10s",
   });
-  const refreshToken = jwt.sign({ id, nama }, process.env.REFRESH_TOKEN, {
-    expiresIn: "1d",
+  const refreshToken = jwt.sign({ id, username }, process.env.REFRESH_TOKEN, {
+    expiresIn: "15d",
   });
 
   await Admin.update(
@@ -62,6 +59,13 @@ export const login = async (req, res) => {
       where: { id },
     }
   );
+
+  // console.log("refreshToken sebelum dikirim : " + refreshToken);
+  // res.cookie("refreshToken", refreshToken, {
+  //   httpOnly: true,
+  //   maxAge: 24 * 60 * 60 * 1000,
+  // });
+  // console.log("refreshToken :" + req.cookies.refreshToken);
 
   res.json({ accessToken, refreshToken });
 };

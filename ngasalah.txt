@@ -1,0 +1,82 @@
+saya mencoba login dengan request seperti ini:
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+    "username" : "tatang",
+    "password" : "adachikawai"
+}
+
+lalu setelah login saya akan mendapatkan cookie yang diset dengan code :
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+
+dan terakhir karena saya telah memiliki cookie saya bisa mengakses route ini tanpa error :
+GET http://localhost:4000/token
+
+tapi ketika saya hubungkan api saya ke client, malah terjadi error. saat login saya memanggil request dengan cara seperti ini :
+    axios
+      .post("http://localhost:4000/auth/login", {
+        username,
+        password,
+      })
+      .then((res) => {
+        dispatch(setUserAuth(true));
+        const { accessToken } = res.data;
+
+        // set accesToken in localStrage
+        localStorage.setItem("accessToken", accessToken);
+        const decode = jwt_decode(res.data.accessToken);
+        localStorage.setItem("tokenExp", decode.exp);
+        navigate("/dashboard");
+
+        // set refreshtoken in cookie
+        // let expirationDate = new Date();
+        // expirationDate.setDate(expirationDate.getDate() + 15);
+        // document.cookie = `refreshToken=${refreshToken};expires=${expirationDate.toUTCString()};path="/"`;
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+
+lalu pada dihalama dashboard saya setting useEffect dengan cara ini :
+  useEffect(() => {
+    refreshToken();
+  }, []);
+
+  const refreshToken = async () => {
+    console.log("refreshToken berjalan");
+    try {
+      const response = await axios.get("http://localhost:4000/token");
+      setToken(response.data.accessToken);
+      const decode = jwt_decode(response.data.accessToken);
+      localStorage.setItem("tokenExp", decode.exp);
+      console.log("refreshToken selesai");
+    } catch (error) {
+      navigate("/auth/login");
+    }
+  };
+
+error terjadi pada saat mencoba request dengan metode get ke http://localhost:4000/token dengan pesan 401 (Unauthorized) dan telah diselidiki ternyata
+refreshTokennya masih bernilai undefined. berikut adalah code controler dari /token :
+export const refreshToken = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  try {
+    if (!refreshToken) return res.sendStatus(401);
+    const admin = Admin.findOne({ where: { refresh_token: refreshToken } });
+    if (admin === null) return res.sendStatus(403);
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, decode) => {
+      if (err) return res.sendStatus(403);
+      const { id, username } = admin;
+      const accessToken = jwt.sign({ id, username }, process.env.ACCESS_TOKEN, {
+        expiresIn: "10m",
+      });
+      res.json({ accessToken });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
