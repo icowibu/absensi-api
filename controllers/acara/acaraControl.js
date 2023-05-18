@@ -3,6 +3,18 @@ import Acara from "../../models/acaraModels.js";
 export const createAcara = async (req, res) => {
   const { acara, tempat, hari, dari, sampai } = req.body;
 
+  if (
+    acara === "" ||
+    tempat === "" ||
+    hari === "" ||
+    sampai === "" ||
+    dari === ""
+  ) {
+    return res
+      .status(400)
+      .json({ msg: "pastikan kolom telah diisi semuanya !" });
+  }
+
   try {
     await Acara.create({
       acara,

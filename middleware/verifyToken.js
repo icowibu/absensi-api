@@ -4,6 +4,7 @@ export const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
   console.log("ini accessToken di server " + token);
 
+  // verify menggunakan fungsi dari jwt
   jwt.verify(token, process.env.ACCESS_TOKEN, (err, decode) => {
     if (err) {
       if (err.name === "TokenExpiredError") {

@@ -37,11 +37,23 @@ export const createAnggota = async (req, res) => {
     ttl,
   };
 
+  if (
+    anggota.nama === "" ||
+    anggota.noTelp === "" ||
+    anggota.hobi === "" ||
+    anggota.kelompok === "" ||
+    anggota.gender === "" ||
+    anggota.ttl === ""
+  ) {
+    return res.status(400).json({ msg: "harap diisi yg kosongnya" });
+  }
+
   try {
     await Anggota.create(anggota);
     res.status(201).json({ msg: "data anggota berhasil ditambahkan" });
   } catch (e) {
-    console.log(e.message);
+    console.log("gagal menambahkan data anggota");
+    res.status(400).json({ msg: e.message });
   }
 };
 

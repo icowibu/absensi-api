@@ -1,0 +1,9 @@
+untuk pertama kali ketika user mengakses web. web akan menjalankan api GET http://localhost:4000/admin
+ini berguna untuk mengecek apakah user sudah memiliki akses login ataw tidak.
+
+pada saat mengakses GET http://localhost:4000/admin ada 3 kemungkinan, yaitu :
+-user belum login sama sekali
+-sudah login tetapi masa login sudah expired
+-user sudah login
+
+cara kerjanya adalah dengan mengambil accessToken dari client dan mencocokannya dengan accessToken pada server
