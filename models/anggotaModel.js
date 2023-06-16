@@ -8,12 +8,17 @@ const { DataTypes } = Sequelize;
 const Anggota = database.define(
   "anggota",
   {
+    idAnggota: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+    },
     nama: DataTypes.STRING,
     noTelp: DataTypes.STRING,
     hobi: DataTypes.STRING,
     kelompok: DataTypes.ENUM("al-hikmah", "husbil", "giri mekar", "al-fatah"),
     gender: DataTypes.ENUM("pria", "wanita"),
     ttl: DataTypes.STRING,
+    status: DataTypes.ENUM("remaja", "usia menikah"),
   },
   {
     freezeTableName: true,

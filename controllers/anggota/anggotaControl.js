@@ -10,6 +10,36 @@ export const getAnggota = async (req, res) => {
   }
 };
 
+export const getAmountAnggota = async (req, res) => {
+  try {
+    const all = await Anggota.count();
+    const alHikmah = await Anggota.count({
+      where: { kelompok: "al-hikmah" },
+    });
+    const husbil = await Anggota.count({
+      where: { kelompok: "husbil" },
+    });
+    const alFatah = await Anggota.count({
+      where: { kelompok: "al-fatah" },
+    });
+    const giriMekar = await Anggota.count({
+      where: { kelompok: "giri mekar" },
+    });
+    console.log(all);
+
+    const jumlah = {
+      alHikmah,
+      alFatah,
+      husbil,
+      giriMekar,
+      all,
+    };
+    res.status(200).json(jumlah);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 export const getAnggotaById = async (req, res) => {
   try {
     const anggota = await Anggota.findOne({
@@ -26,8 +56,38 @@ export const getAnggotaById = async (req, res) => {
 };
 
 export const createAnggota = async (req, res) => {
-  const { nama, noTelp, hobi, kelompok, gender, ttl } = req.body;
+  const { nama, noTelp, hobi, kelompok, gender, ttl, status } = req.body;
 
+  let idAnggota = "";
+  switch (kelompok) {
+    case "al-hikmah":
+      idAnggota += "1";
+      break;
+    case "husbil":
+      idAnggota += "2";
+      break;
+    case "giri mekar":
+      idAnggota += "3";
+      break;
+    case "al-fatah":
+      idAnggota += "4";
+      break;
+  }
+
+  function hashNameTo4DigitNumber(name) {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash += name.charCodeAt(i);
+    }
+    const fourDigitNumber = hash % 10000;
+    return fourDigitNumber.toString().padStart(4, "0");
+  }
+
+  const hashName = hashNameTo4DigitNumber(nama);
+  console.log(hashName);
+  idAnggota += hashName;
+
+  console.log(idAnggota);
   const anggota = {
     nama,
     noTelp,
@@ -35,6 +95,8 @@ export const createAnggota = async (req, res) => {
     kelompok,
     gender,
     ttl,
+    idAnggota,
+    status,
   };
 
   if (

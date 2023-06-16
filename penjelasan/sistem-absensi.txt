@@ -1,0 +1,4 @@
+hal pertama yang harus dilakukan adalah pergi ke halaman tambah acara
+saat acara sudah di submit akan terbuat dua object yaitu acara dan absensi
+object acara berisikan informasi tentang acara tersebut sedangkan object absesi berisikan id anggota yang hadir, izin, dan tidak hadir
+
