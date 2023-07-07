@@ -1,5 +1,5 @@
 GET http://localhost:4000/admin   
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzk3MjM1NzQsImV4cCI6MTY3OTcyNDE3NH0.bFkmgJIFegKUaOFqvhf3wEP3aWXNlYR7b3-snCC7hbo
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODc0MjQ0MDYsImV4cCI6MTY4NzQyNTAwNn0.hIXFWE5qzbAQs7QG2EZaZWHtGlBuB41U3jVb-j-1U60
 
 ###
 POST http://localhost:4000/auth/register
@@ -21,4 +21,9 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:4000/token
+POST http://localhost:4000/token
+Content-Type: application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ0YXRhbmciLCJpYXQiOjE2ODczODIxNDUsImV4cCI6MTY4ODY3ODE0NX0.tX6KU77fc1zhTCRsLwV1IBOvmnF-DID9CQeQS19oO_w"
+}

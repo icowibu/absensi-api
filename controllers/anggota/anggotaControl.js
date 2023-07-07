@@ -80,11 +80,15 @@ export const createAnggota = async (req, res) => {
       hash += name.charCodeAt(i);
     }
     const fourDigitNumber = hash % 10000;
-    return fourDigitNumber.toString().padStart(4, "0");
+    return fourDigitNumber.toString().padStart(3, "0");
+  }
+
+  for (let i = 0; i < 3; i++) {
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    idAnggota += randomNumber;
   }
 
   const hashName = hashNameTo4DigitNumber(nama);
-  console.log(hashName);
   idAnggota += hashName;
 
   console.log(idAnggota);
@@ -122,7 +126,12 @@ export const createAnggota = async (req, res) => {
 export const updateAnggota = async (req, res) => {
   console.log(req.body);
   try {
-    await Anggota.update(req.body, { where: { id: req.params.id } });
+    await Anggota.update(
+      { ...req.body.dataAnggota },
+      {
+        where: { idAnggota: req.params.id },
+      }
+    );
     res.status(201).json({ msg: "data anggota berhasil diupdate" });
   } catch (e) {
     console.log(e.message);
@@ -131,7 +140,7 @@ export const updateAnggota = async (req, res) => {
 
 export const deleteAnggota = async (req, res) => {
   try {
-    await Anggota.destroy({ where: { id: req.params.id } });
+    await Anggota.destroy({ where: { idAnggota: req.params.id } });
     res.status(201).json({ msg: "data anggota berhasil dihapus" });
   } catch (e) {
     console.log(e.message);

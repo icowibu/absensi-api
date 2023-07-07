@@ -22,8 +22,10 @@ import {
 // acara
 import {
   createAcara,
+  getAcaraById,
   getAcaraSekarang,
   getAllAcara,
+  getArsipAcara,
 } from "../controllers/acara/acaraControl.js";
 
 // absensi
@@ -31,7 +33,10 @@ import {
   getDataAbsensi,
   getDataHadirId,
   getDataIzinId,
-  getDataKehadiranKelompok,
+  getDataKehadiranById,
+  getDetailAbsensi,
+  getJumlahDataKehadiranById,
+  submitAbsensi,
   updateAbsensi,
 } from "../controllers/absensi/absensiControler.js";
 
@@ -44,7 +49,7 @@ routes.get("/", (req, res) => {
   return res.status(200).send("API HOME");
 });
 
-// anggota route
+// anggota
 routes.get("/anggota", getAnggota);
 routes.get("/anggota/count", getAmountAnggota);
 routes.get("/anggota/:id", getAnggotaById);
@@ -52,22 +57,27 @@ routes.post("/anggota", createAnggota);
 routes.patch("/anggota/:id", updateAnggota);
 routes.delete("/anggota/:id", deleteAnggota);
 
-// admin route
+// admin
 routes.get("/admin", verifyToken, adminCheck);
 routes.post("/auth/register", register);
 routes.post("/auth/login", login);
 routes.post("/token", refreshToken);
 
-// acara route
+// acara
 routes.post("/acara", createAcara);
 routes.get("/acara/now", getAcaraSekarang);
+routes.get("/acara/:id", getAcaraById);
 routes.get("/acara", getAllAcara);
 
-// absensi route
+// absensi
 routes.get("/absensi", getDataAbsensi);
-routes.get("/absensi/kehadiran/kelompok/:id", getDataKehadiranKelompok);
-routes.get("/absensi/:id", getDataHadirId);
+routes.get("/absensi/arsip", getArsipAcara);
+routes.get("/absensi/kehadiran/jumlah/:id", getJumlahDataKehadiranById);
+routes.get("/absensi/kehadiran/data/:id", getDataKehadiranById);
+routes.get("/absensi/kehadiran/detail/:kel/:id", getDetailAbsensi);
+routes.get("/absensi/hadir/:id", getDataHadirId);
 routes.get("/absensi/izin/:id", getDataIzinId);
 routes.post("/absensi", updateAbsensi);
+routes.post("/absensi/submit", submitAbsensi);
 
 export default routes;

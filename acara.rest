@@ -1,9 +1,13 @@
+### get all Acara
 GET http://localhost:4000/acara
 
-###
+### get one Acara by id
+GET http://localhost:4000/acara/20
+
+### pengkondisian acara
 GET http://localhost:4000/acara/now
 
-###
+### submit acara
 POST http://localhost:4000/acara   
 Content-Type: application/json
 

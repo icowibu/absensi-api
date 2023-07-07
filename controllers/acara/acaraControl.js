@@ -1,5 +1,5 @@
 import Absensi from "../../models/absensiModels.js";
-import Acara from "../../models/acaraModels.js";
+import Acara, { ArsipAcara } from "../../models/acaraModels.js";
 
 export const createAcara = async (req, res) => {
   const { acara, tempat, hari, dari, sampai } = req.body;
@@ -31,9 +31,30 @@ export const createAcara = async (req, res) => {
   }
 };
 
+export const getAcaraById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const response = await Acara.findOne({
+      where: { id },
+    });
+    res.status(200).json(response);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 export const getAllAcara = async (req, res) => {
   try {
     const response = await Acara.findAll();
+    res.status(200).json(response);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+export const getArsipAcara = async (req, res) => {
+  try {
+    const response = await ArsipAcara.findAll();
     res.status(200).json(response);
   } catch (e) {
     console.log(e.message);

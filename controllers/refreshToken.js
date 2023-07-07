@@ -2,8 +2,7 @@ import Admin from "../models/adminModels.js";
 import jwt from "jsonwebtoken";
 
 export const refreshToken = async (req, res) => {
-  const refreshToken = req.body.refreshToken;
-  console.log(refreshToken);
+  const { refreshToken } = req.body;
   try {
     if (!refreshToken) return res.sendStatus(401);
     const admin = Admin.findOne({ where: { refresh_token: refreshToken } });

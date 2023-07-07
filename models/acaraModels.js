@@ -19,8 +19,21 @@ const Acara = database.define(
   }
 );
 
+export const ArsipAcara = database.define(
+  "arsip",
+  {
+    acara: DataTypes.STRING,
+    kehadiran: DataTypes.JSON,
+    idAcara: DataTypes.INTEGER,
+  },
+  {
+    freezeTableName: true,
+  }
+);
+
 export default Acara;
 
 (async () => {
   await Acara.sync();
+  await ArsipAcara.sync();
 })();

@@ -1,23 +1,35 @@
 GET http://localhost:4000/anggota   
 
 ###
+# AdaAcara.jsx (menghitung jumlah anggota muda mudi)
 GET http://localhost:4000/anggota/count  
 
 ###
 GET http://localhost:4000/anggota/1
 
 ###
+DELETE  http://localhost:4000/anggota/10412
+
+###
 POST  http://localhost:4000/anggota   
 Content-Type: application/json
 
 {
-    "nama" : "acil",
+    "nama" : "and",
     "noTelp" : "085624745579",
     "hobi" : "mengaji",
-    "kelompok": "giri mekar",
+    "kelompok": "al-hikmah",
     "gender" : "pria",
     "ttl" : "2005-12-04",
     "status" : "remaja"
+}
+
+###
+PATCH           
+Content-Type: application/json
+
+{
+    "nama" : "apip"
 }
 
 ###

@@ -18,7 +18,7 @@ const Anggota = database.define(
     kelompok: DataTypes.ENUM("al-hikmah", "husbil", "giri mekar", "al-fatah"),
     gender: DataTypes.ENUM("pria", "wanita"),
     ttl: DataTypes.STRING,
-    status: DataTypes.ENUM("remaja", "usia menikah"),
+    status: DataTypes.ENUM("remaja", "usia nikah"),
   },
   {
     freezeTableName: true,
