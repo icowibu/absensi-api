@@ -80,7 +80,7 @@ export const getAcaraSekarang = async (req, res) => {
     const acaraHariIni = response.find((item) => item.hari === tanggalString);
 
     let adaAcaraHariIni;
-    let sudahDiMulai = false;
+    let sudahDiMulai;
 
     if (acaraHariIni === undefined) {
       adaAcaraHariIni = false;

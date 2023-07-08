@@ -18,3 +18,6 @@ Content-Type: application/json
     "dari" : "10-10-10",
     "sampai" : "20-20-20"
 }
+
+### pengkondisian acara
+GET https://vast-rose-fox-cuff.cyclic.app/acara/now
