@@ -72,6 +72,9 @@ export const getAcaraSekarang = async (req, res) => {
     const now = new Date();
     const mulai = new Date(now.toDateString() + " " + mulaiDari);
     const selesai = new Date(now.toDateString() + " " + sampaiJam);
+    console.log(mulaiDari);
+    console.log(sampaiJam);
+    console.log(now > mulai && now < selesai);
     return now > mulai && now < selesai;
   };
 
