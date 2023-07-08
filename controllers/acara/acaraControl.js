@@ -1,5 +1,6 @@
 import Absensi from "../../models/absensiModels.js";
 import Acara, { ArsipAcara } from "../../models/acaraModels.js";
+import moment from "moment";
 
 export const createAcara = async (req, res) => {
   const { acara, tempat, hari, dari, sampai } = req.body;
@@ -69,14 +70,10 @@ export const getAcaraSekarang = async (req, res) => {
   const tanggalString = `${tahun}-${bulan}-${tanggal}`;
 
   const acaraBerlangsung = (mulaiDari, sampaiJam) => {
-    const now = new Date().getHours();
+    const now = moment.tz("Asia/Jakarta").format("HH:mm:ss").substring(0, 2);
     const mulai = mulaiDari.substring(0, 2);
     const selesai = sampaiJam.substring(0, 2);
-    console.log(mulai);
-    console.log(selesai);
-    console.log(now);
-    console.log(now > mulai && now < selesai);
-    return now > mulai && now < selesai;
+    return now >= mulai && now <= selesai;
   };
 
   try {
