@@ -69,9 +69,9 @@ export const getAcaraSekarang = async (req, res) => {
   const tanggalString = `${tahun}-${bulan}-${tanggal}`;
 
   const acaraBerlangsung = (mulaiDari, sampaiJam) => {
-    const now = new Date();
-    const mulai = new Date(now.toDateString() + " " + mulaiDari);
-    const selesai = new Date(now.toDateString() + " " + sampaiJam);
+    const now = new Date().getHours();
+    const mulai = mulaiDari.substring(0, 2);
+    const selesai = sampaiJam.substring(0, 2);
     console.log(mulai);
     console.log(selesai);
     console.log(now > mulai && now < selesai);
