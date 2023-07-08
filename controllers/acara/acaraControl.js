@@ -74,6 +74,7 @@ export const getAcaraSekarang = async (req, res) => {
     const selesai = sampaiJam.substring(0, 2);
     console.log(mulai);
     console.log(selesai);
+    console.log(now);
     console.log(now > mulai && now < selesai);
     return now > mulai && now < selesai;
   };
