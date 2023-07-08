@@ -23,7 +23,7 @@ export const ArsipAcara = database.define(
   "arsip",
   {
     acara: DataTypes.STRING,
-    kehadiran: DataTypes.JSON,
+    kehadiran: DataTypes.STRING,
     idAcara: DataTypes.INTEGER,
   },
   {

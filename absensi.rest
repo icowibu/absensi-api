@@ -7,7 +7,7 @@ GET http://localhost:4000/absensi/kehadiran/jumlah/20
 GET http://localhost:4000/absensi/kehadiran/data/23
 
 ### get data hadir by id
-GET http://localhost:4000/absensi/kehadiran/detail/husbil/20
+GET http://localhost:4000/absensi/kehadiran/detail/giri mekar/20
 
 ###
 GET http://localhost:4000/absensi/hadir/20
